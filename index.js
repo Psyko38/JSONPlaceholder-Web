@@ -9,34 +9,25 @@ button.addEventListener("click", () => {
 async function SendAndCreat(URL) {
 	fetch(URL)
 		.then((response) => response.json())
-		.then((json) => Creat(json));
+		.then((json) => create(json));
 }
 
-function Creat(JSON) {
-	console.log(JSON);
-	let tag = 1;
-	let AllKey = getAllKeys(JSON[tag]);
-	let MainDiv = document.createElement("div");
-	console.log(AllKey);
-	for (let index = 0; index < AllKey.length; index++) {
-		let P2 = document.createElement("p");
-		P2.innerHTML = AllKey[index];
-		let P1 = document.createElement("p");
-		console.log(JSON[tag]);
-		P1.innerHTML = JSON[tag].AllKey[index];
-		MainDiv.appendChild(P2);
-		MainDiv.appendChild(P1);
-	}
-	div.appendChild(MainDiv);
-}
-
-function getAllKeys(obj) {
-	let keys = [];
-	for (let key in obj) {
-		keys.push(key);
-		if (typeof obj[key] === "object" && obj[key] !== null) {
-			keys = keys.concat(getAllKeys(obj[key]));
+function create(jsonData) {
+	for (let tag = 0; tag < jsonData.length; tag++) {
+		let MainDiv = document.createElement("div");
+		if (jsonData[tag]) {
+			let allKeys = Object.keys(jsonData[tag]);
+			for (let index = 0; index < allKeys.length; index++) {
+				let P2 = document.createElement("p");
+				P2.innerHTML = [allKeys[index]];
+				let P1 = document.createElement("p");
+				P1.innerHTML = jsonData[tag][allKeys[index]];
+				MainDiv.appendChild(P2);
+				MainDiv.appendChild(P1);
+			}
+			div.appendChild(MainDiv);
+		} else {
+			console.log("L'index spécifié n'existe pas dans l'objet JSON.");
 		}
 	}
-	return keys;
 }
